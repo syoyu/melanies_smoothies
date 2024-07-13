@@ -34,8 +34,9 @@ if ingredients_list: #実質is not nullという判定を含む
 
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '#選択されたフルーツを文字列リストに追加する
+        st.subheader(fruit_chosen + ' Nutrition Information')
         #選択されたフルーツの情報を表示（外部リクエスト）
-        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon" + fruit_chosen)
         fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
 
     #st.write(ingredients_string)
