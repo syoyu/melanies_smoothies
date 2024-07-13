@@ -24,8 +24,8 @@ my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT
 
 #snowpark Dataframeからpandas dataframeに変更
 pd_df = my_dataframe.to_pandas()
-st.dataframe(pd_df)
-st.stop()
+#st.dataframe(pd_df)
+#st.stop()
 
 #複数選択ボックス
 ingredients_list = st.multiselect(
@@ -40,6 +40,10 @@ if ingredients_list: #実質is not nullという判定を含む
 
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '#選択されたフルーツを文字列リストに追加する
+
+        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+        st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
+        
         st.subheader(fruit_chosen + ' Nutrition Information')
         #選択されたフルーツの情報を表示（外部リクエスト）
         fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_chosen)
